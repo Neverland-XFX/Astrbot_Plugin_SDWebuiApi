@@ -1,0 +1,5 @@
+name: sdWebuiApi                         # 插件唯一名
+desc: 调用本地 Stable Diffusion WebUI 文生图/图生图
+version: v0.1.0
+author: neverland
+repo: https://github.com/orran/astrbot_plugin_sdwebui

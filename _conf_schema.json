@@ -1,0 +1,30 @@
+{
+  "base_url": {
+    "description": "WebUI 基地址",
+    "type": "string",
+    "default": "http://127.0.0.1:7860",
+    "hint": "需在启动 WebUI 时加 --api"
+  },
+  "output_dir": {
+    "description": "本地保存图片目录",
+    "type": "string",
+    "default": "output",
+    "hint": "相对路径，AstrBot 会自动创建"
+  },
+  "width":  { "description": "宽度",  "type": "int", "default": 512 },
+  "height": { "description": "高度", "type": "int", "default": 512 },
+  "steps":  { "description": "采样步数", "type": "int", "default": 20 },
+  "cfg":    { "description": "CFG Scale", "type": "float", "default": 7.0 },
+  "sampler": {
+    "description": "采样器名称",
+    "type": "string",
+    "default": "Euler a",
+    "hint": "与 UI 下拉框名字保持一致"
+  },
+  "batch":  { "description": "生成张数", "type": "int", "default": 1 },
+  "translate_prompt": {
+    "description": "是否自动翻译中文提示词",
+    "type": "bool",
+    "default": false
+  }
+}
