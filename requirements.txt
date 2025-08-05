@@ -1,2 +1,1 @@
-httpx>=0.25.0       # 异步 HTTP 调用
-colorama>=0.4.6     # 彩色日志，可选
+aiohttp

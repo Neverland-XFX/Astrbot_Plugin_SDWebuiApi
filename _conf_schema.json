@@ -1,30 +1,163 @@
 {
-  "base_url": {
-    "description": "WebUI 基地址",
-    "type": "string",
-    "default": "http://127.0.0.1:7860",
-    "hint": "需在启动 WebUI 时加 --api"
-  },
-  "output_dir": {
-    "description": "本地保存图片目录",
-    "type": "string",
-    "default": "output",
-    "hint": "相对路径，AstrBot 会自动创建"
-  },
-  "width":  { "description": "宽度",  "type": "int", "default": 512 },
-  "height": { "description": "高度", "type": "int", "default": 512 },
-  "steps":  { "description": "采样步数", "type": "int", "default": 20 },
-  "cfg":    { "description": "CFG Scale", "type": "float", "default": 7.0 },
-  "sampler": {
-    "description": "采样器名称",
-    "type": "string",
-    "default": "Euler a",
-    "hint": "与 UI 下拉框名字保持一致"
-  },
-  "batch":  { "description": "生成张数", "type": "int", "default": 1 },
-  "translate_prompt": {
-    "description": "是否自动翻译中文提示词",
-    "type": "bool",
-    "default": false
+    "base_url": {
+      "description": "Stable Diffusion WebUI 的 HTTP 地址（如 http://127.0.0.1:7860）",
+      "type": "string",
+      "default": "http://127.0.0.1:7860"
+    },
+    "output_dir": {
+      "description": "生成图片在本地保存的目录（相对插件目录）",
+      "type": "string",
+      "default": "images"
+    },
+    "width": {
+      "description": "生成图片的宽度（像素）",
+      "type": "int",
+      "default": 512
+    },
+    "height": {
+      "description": "生成图片的高度（像素）",
+      "type": "int",
+      "default": 512
+    },
+    "steps": {
+      "description": "生成图片时的采样步数（建议 20~40）",
+      "type": "int",
+      "default": 20
+    },
+    "cfg": {
+      "description": "CFG 采样指导系数，影响图片与提示词的契合度（建议 5~12）",
+      "type": "float",
+      "default": 7.0
+    },
+    "sampler": {
+      "description": "采样算法（如 Euler a, DPM++ 2M Karras 等）",
+      "type": "string",
+      "default": "Euler a"
+    },
+    "batch": {
+      "description": "每次生成图片的张数（建议 1~8）",
+      "type": "int",
+      "default": 1
+    },
+    "n_iter": {
+      "description": "批量生成时迭代次数（建议 1~4）",
+      "type": "int",
+      "default": 1
+    },
+    "negative_prompt_global": {
+      "description": "全局负面提示词（所有生成请求都会拼接该内容）",
+      "type": "string",
+      "default": "low quality, bad hands"
+    },
+    "translate_prompt": {
+      "description": "是否自动将中文提示词翻译为英文",
+      "type": "bool",
+      "default": false
+    },
+    "enable_generate_prompt": {
+      "description": "是否自动用 LLM 生成英文 prompt（AI 自动润色）",
+      "type": "bool",
+      "default": false
+    },
+    "prompt_guidelines": {
+      "description": "LLM 自动生成 prompt 的附加要求（如风格、构图等建议）",
+      "type": "string",
+      "default": ""
+    },
+    "enable_show_positive_prompt": {
+      "description": "生成图片时是否回显正向 prompt",
+      "type": "bool",
+      "default": false
+    },
+    "enable_hires_fix": {
+      "description": "是否开启 Hi-Res Fix 放大修复（高分辨率重绘）",
+      "type": "bool",
+      "default": false
+    },
+    "hires_steps": {
+      "description": "Hi-Res Fix 放大采样步数（建议 10~40）",
+      "type": "int",
+      "default": 28
+    },
+    "hires_denoise": {
+      "description": "Hi-Res Fix 放大重绘去噪强度（建议 0.2~0.7）",
+      "type": "float",
+      "default": 0.45
+    },
+    "hires_upscaler": {
+      "description": "Hi-Res Fix 使用的放大算法（如 Latent, R-ESRGAN 4x）",
+      "type": "string",
+      "default": "Latent"
+    },
+    "hires_resize_factor": {
+      "description": "Hi-Res Fix 放大倍数（如 2=2倍）",
+      "type": "int",
+      "default": 2
+    },
+    "enable_upscale": {
+      "description": "是否开启 Extras 超分辨率（单独图像超分）",
+      "type": "bool",
+      "default": false
+    },
+    "upscale_factor": {
+      "description": "Extras 超分辨率的放大倍数",
+      "type": "int",
+      "default": 2
+    },
+    "upscaler": {
+      "description": "Extras 超分使用的上采样算法",
+      "type": "string",
+      "default": ""
+    },
+    "enable_lora": {
+      "description": "是否启用 LoRA 微调模型",
+      "type": "bool",
+      "default": false
+    },
+    "lora_model": {
+      "description": "当前选中的 LoRA 模型名",
+      "type": "string",
+      "default": ""
+    },
+    "lora_weight": {
+      "description": "LoRA 权重（0~1 之间）",
+      "type": "float",
+      "default": 0.8
+    },
+    "enable_controlnet": {
+      "description": "是否开启 ControlNet（高级控制辅助）",
+      "type": "bool",
+      "default": false
+    },
+    "controlnet_preprocessor": {
+      "description": "ControlNet 预处理器类型（如 openpose_full, canny 等）",
+      "type": "string",
+      "default": "openpose_full"
+    },
+    "controlnet_model": {
+      "description": "ControlNet 模型名称",
+      "type": "string",
+      "default": ""
+    },
+    "controlnet_weight": {
+      "description": "ControlNet 权重",
+      "type": "float",
+      "default": 1.0
+    },
+    "verbose": {
+      "description": "是否开启详细日志和输出",
+      "type": "bool",
+      "default": true
+    },
+    "max_concurrent_tasks": {
+      "description": "允许的最大并发任务数",
+      "type": "int",
+      "default": 10
+    },
+    "session_timeout_time": {
+      "description": "每次生成请求的超时时间（秒）",
+      "type": "int",
+      "default": 120
+    }
   }
-}
+  
