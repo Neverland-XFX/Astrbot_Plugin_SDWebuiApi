@@ -263,6 +263,7 @@ class SdWebuiApi(Star):
     # ────────────── /sd txt2img ──────────────
     @filter.command("sd")
     async def sd_cmd(self, event: AstrMessageEvent):
+        """文生图"""
         prompt_raw = self._extract_plain(event.message_obj.message)
         if not prompt_raw:
             yield event.plain_result("❌ 请输入提示词。例如 /sd cyberpunk city")
@@ -294,7 +295,8 @@ class SdWebuiApi(Star):
     # ────────────── /sdi img2img ──────────────
     @filter.command("sdi")
     async def sdi_cmd(self, event: AstrMessageEvent):
-        # 取图片与提示词
+        """图生图"""
+        #取图片与提示词
         img_bytes = None
         prompt_raw = None
         for seg in event.message_obj.message:
@@ -332,7 +334,8 @@ class SdWebuiApi(Star):
     # ────────────── /sd model list/set ──────────────
     @filter.command("sd_model")
     async def sd_model(self, event: AstrMessageEvent):
-        """列出/切换模型 /sd_model [list|set n]"""
+        """列出/切换模型"""
+        #/sd_model [list|set n]
         msg = self._extract_plain(event.message_obj.message) or ""
         if msg.startswith("list"):
             try:
@@ -359,7 +362,8 @@ class SdWebuiApi(Star):
     # ────────────── /sd_sampler ──────────────
     @filter.command("sd_sampler")
     async def sd_sampler(self, event: AstrMessageEvent):
-        """采样器管理 /sd_sampler [list|set n]"""
+        """采样器管理"""
+        # /sd_sampler [list|set n]
         msg = self._extract_plain(event.message_obj.message) or ""
         if msg.startswith("list"):
             self._samplers = await self.fetch_webui_resource("sampler")
@@ -378,6 +382,7 @@ class SdWebuiApi(Star):
     # ────────────── /sd_upscaler ──────────────
     @filter.command("sd_upscaler")
     async def sd_upscaler(self, event: AstrMessageEvent):
+        """上采样算法管理"""
         msg = self._extract_plain(event.message_obj.message) or ""
         if msg.startswith("list"):
             self._upscalers = await self.fetch_webui_resource("upscaler")
@@ -396,7 +401,8 @@ class SdWebuiApi(Star):
     # ────────────── /sd_lora ──────────────
     @filter.command("sd_lora")
     async def sd_lora(self, event: AstrMessageEvent):
-        """LoRA管理 /sd_lora [list|set n weight]"""
+        """设置LoRA"""
+        #LoRA管理 /sd_lora [list|set n weight]
         msg = self._extract_plain(event.message_obj.message) or ""
         if msg.startswith("list"):
             self._lora = await self.fetch_webui_resource("lora")
@@ -414,6 +420,7 @@ class SdWebuiApi(Star):
     # ────────────── /sd_embedding ──────────────
     @filter.command("sd_embedding")
     async def sd_embedding(self, event: AstrMessageEvent):
+        """Embedding 向量模型管理"""
         self._embedding = await self.fetch_webui_resource("embedding")
         text = "\n".join([f"{i+1}. {m}" for i, m in enumerate(self._embedding)])
         yield event.plain_result(f"可用Embedding：\n{text}")
@@ -421,6 +428,7 @@ class SdWebuiApi(Star):
     # ────────────── /sd_conf 打印当前所有参数 ──────────────
     @filter.command("sd_conf")
     async def sd_conf(self, event: AstrMessageEvent):
+        """	参数与环境总览"""
         info = (
             f"当前模型: {self.config.get('default_model', '')}\n"
             f"采样器: {self.sampler}\n"
@@ -443,6 +451,7 @@ class SdWebuiApi(Star):
     # ────────────── /sd_help ──────────────
     @filter.command("sd_help")
     async def sd_help(self, event: AstrMessageEvent):
+        """插件功能总览与指令说明"""
         help_text = (
             "🖼️ Stable Diffusion WebUI 全功能插件 指令指南\n"
             "生成图像: /sd 提示词\n"
