@@ -139,7 +139,7 @@ Bot 自动返回：
 
 ------
 
-## 二次开发指北
+## 二次开发
 
 - **增加新指令**
    仿照 `@filter.command("sd")` 新增指令与处理方法，参数、API结构高度一致。
@@ -155,7 +155,7 @@ Bot 自动返回：
 ## 致谢
 
 - [Stable Diffusion WebUI](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
-- [AstrBot](https://github.com/orran/AstrBot)
+- [AstrBot](https://github.com/AstrBotDevs/AstrBot)
 
 ------
 
